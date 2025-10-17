@@ -44,8 +44,8 @@ public class FallState : PlayerBaseState
     private bool CheckIfCanIdle()
     {
         //Nếu vận tốc 2 trục rất nhỏ VÀ đang trên nền thì coi như đang Idle
-        return Math.Abs(_playerStateManager.GetRigidBody2D().velocity.x) < GameConstants.NEAR_ZERO_THRESHOLD
-            && Math.Abs(_playerStateManager.GetRigidBody2D().velocity.y) < GameConstants.NEAR_ZERO_THRESHOLD
+        return Math.Abs(_playerStateManager.GetRigidBody2D().linearVelocity.x) < GameConstants.NEAR_ZERO_THRESHOLD
+            && Math.Abs(_playerStateManager.GetRigidBody2D().linearVelocity.y) < GameConstants.NEAR_ZERO_THRESHOLD
             && _playerStateManager.GetIsOnGround();
     }
 
@@ -53,8 +53,8 @@ public class FallState : PlayerBaseState
     {
         //Nếu vận tốc trục x lớn hơn .1f và trục y rất nhỏ
         //và đang OnGround thì chuyển sang state Run
-        return Math.Abs(_playerStateManager.GetRigidBody2D().velocity.x) > GameConstants.NEAR_ZERO_THRESHOLD
-            && Math.Abs(_playerStateManager.GetRigidBody2D().velocity.y) < GameConstants.NEAR_ZERO_THRESHOLD
+        return Math.Abs(_playerStateManager.GetRigidBody2D().linearVelocity.x) > GameConstants.NEAR_ZERO_THRESHOLD
+            && Math.Abs(_playerStateManager.GetRigidBody2D().linearVelocity.y) < GameConstants.NEAR_ZERO_THRESHOLD
             && _playerStateManager.GetIsOnGround();
     }
 
@@ -83,8 +83,8 @@ public class FallState : PlayerBaseState
         //Nhảy đáp từ tường xuống Ground trông đéo được mượt :D
         if (_playerStateManager.GetDirX() != 0)
             if (!BuffsManager.Instance.GetTypeOfBuff(GameEnums.EBuffs.Speed).IsAllowToUpdate)
-                _playerStateManager.GetRigidBody2D().velocity = new Vector2(_playerStateManager.GetPlayerStats.SpeedX * _playerStateManager.GetDirX(), _playerStateManager.GetRigidBody2D().velocity.y);
+                _playerStateManager.GetRigidBody2D().linearVelocity = new Vector2(_playerStateManager.GetPlayerStats.SpeedX * _playerStateManager.GetDirX(), _playerStateManager.GetRigidBody2D().linearVelocity.y);
             else
-                _playerStateManager.GetRigidBody2D().velocity = new Vector2(_playerStateManager.GetPlayerStats.SpeedX *  ((PlayerSpeedBuff)BuffsManager.Instance.GetTypeOfBuff(GameEnums.EBuffs.Speed)).SpeedMultiplier * _playerStateManager.GetDirX(), _playerStateManager.GetRigidBody2D().velocity.y);
+                _playerStateManager.GetRigidBody2D().linearVelocity = new Vector2(_playerStateManager.GetPlayerStats.SpeedX *  ((PlayerSpeedBuff)BuffsManager.Instance.GetTypeOfBuff(GameEnums.EBuffs.Speed)).SpeedMultiplier * _playerStateManager.GetDirX(), _playerStateManager.GetRigidBody2D().linearVelocity.y);
     }
 }
